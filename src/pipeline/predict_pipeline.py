@@ -1,16 +1,15 @@
-import sys
 import os
+import sys
+
 import pandas as pd
+
+from src.components.data_ingestion import DataIngestion
+from src.components.data_transformation import DataTransformation
 from src.exception import CustomException
 from src.utils import load_object
-from src.components.data_transformation import DataTransformation
-from src.components.data_ingestion import DataIngestion
 
 
 class PredictPipeline:
-    def __init__(self):
-        pass
-
     def predict(self, features):
         try:
             model_path = os.path.join("artifacts", "model.pkl")

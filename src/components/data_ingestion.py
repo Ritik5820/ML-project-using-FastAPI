@@ -1,18 +1,15 @@
 import os
 import sys
+from dataclasses import dataclass
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 from src.exception import CustomException
 from src.logger import logging
 from src.utils import split_data
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from dataclasses import dataclass
-
-from src.components.data_transformation import (
-    DataTransformation,
-    DataTransformationConfig,
-)
-
-from src.components.model_trainer import ModelTrainerConfig, ModelTrainer
 
 
 @dataclass
@@ -64,19 +61,21 @@ class DataIngestion:
             raise CustomException(e, sys)
 
 
-if __name__ == "__main__":
-    obj = DataIngestion()
-    train_data, test_data = obj.initiate_data_ingestion()
+# ----------------------------------For testing purpose only--------------------------------------------------:
 
-    data_transformation = DataTransformation()
+# if __name__ == "__main__":
+#     obj = DataIngestion()
+#     train_data, test_data = obj.initiate_data_ingestion()
 
-    train_array, test_array, _ = data_transformation.initiate_data_transformation(
-        train_data, test_data
-    )
+#     data_transformation = DataTransformation()
 
-    modeltraner = ModelTrainer()
-    print(
-        modeltraner.initiate_model_trainer(
-            train_array=train_array, test_array=test_array
-        )
-    )
+#     train_array, test_array, _ = data_transformation.initiate_data_transformation(
+#         train_data, test_data
+#     )
+
+#     modeltraner = ModelTrainer()
+#     print(
+#         modeltraner.initiate_model_trainer(
+#             train_array=train_array, test_array=test_array
+#         )
+#     )

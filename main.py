@@ -1,12 +1,14 @@
+import numpy as np
 import pandas as pd
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+
 from src.misc import (
     GenderEnum,
-    RaceEthnicity,
-    Parental_Level_Of_Eductaion,
     Lunch,
+    Parental_Level_Of_Eductaion,
+    RaceEthnicity,
     TestPreparationCourse,
 )
 from src.pipeline.predict_pipeline import PredictPipeline
@@ -17,9 +19,7 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
-    return templates.TemplateResponse(
-        "index.html", {"request": request, "name": "World"}
-    )
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/predictdata")
@@ -53,4 +53,4 @@ async def predict_datapoint(
     predict_pipeline = PredictPipeline()
     result = predict_pipeline.predict(pred_df)
 
-    return result[0]
+    return np.round(result[0])

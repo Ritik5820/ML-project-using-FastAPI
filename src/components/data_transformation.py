@@ -1,6 +1,4 @@
 import sys
-import os
-from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
@@ -12,18 +10,8 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from src.exception import CustomException
 from src.logger import logging
 
-# from src.utils import save_object
-
-
-@dataclass
-class DataTransformationConfig:
-    preprocessor_obj_file_path = os.path.join("artifacts", "preprocessor.pkl")
-
 
 class DataTransformation:
-    def __init__(self):
-        self.data_transformation_config = DataTransformationConfig()
-
     def get_data_transformer_object(self):
         try:
             numerical_columns = ["writing_score", "reading_score"]
@@ -104,18 +92,7 @@ class DataTransformation:
                 "Concatenation features and labels for train and test dataset complete"
             )
 
-            # logging.info("Saved preprocessing object")
-
-            # save_object(
-            #     file_path=self.data_transformation_config.preprocessor_obj_file_path,
-            #     obj=preprocessing_obj,
-            # )
-
-            return (
-                train_arr,
-                test_arr,
-                self.data_transformation_config.preprocessor_obj_file_path,
-            )
+            return (train_arr, test_arr)
 
         except Exception as e:
             raise CustomException(e, sys)
