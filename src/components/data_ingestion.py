@@ -21,9 +21,25 @@ class DataIngestionConfig:
 
 class DataIngestion:
     def __init__(self):
+        """Initiate data ingestion process.
+
+        Raises:
+            CustomException: Raised if any exception occurs during the process.
+
+        Returns:
+            Tuple[str, str]: Tuple containing paths of the train and test data.
+        """
         self.ingestion_config = DataIngestionConfig()
 
     def initiate_data_ingestion(self):
+        """_summary_
+
+        Raises:
+            CustomException: _description_
+
+        Returns:
+            _type_: _description_
+        """
         logging.info("Entered in data ingestion method or component successfully")
         try:
             logging.info("Reading dataset initiated")

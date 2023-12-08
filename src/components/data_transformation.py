@@ -13,6 +13,14 @@ from src.logger import logging
 
 class DataTransformation:
     def get_data_transformer_object(self):
+        """Get the data transformer object.
+
+        Raises:
+            CustomException: If an error occurs during the process.
+
+        Returns:
+            ColumnTransformer: Data transformer object.
+        """
         try:
             numerical_columns = ["writing_score", "reading_score"]
             categorical_columns = [
@@ -53,6 +61,18 @@ class DataTransformation:
             raise CustomException(e, sys)
 
     def initiate_data_transformation(self, train_path, test_path):
+        """Initiate data transformation.
+
+        Args:
+            train_path (str): Path to the training data.
+            test_path (str): Path to the test data.
+
+        Raises:
+            CustomException: If an error occurs during the process.
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: Transformed training and test arrays.
+        """
         try:
             logging.info("Reading train and test data initiated")
             train_df = pd.read_csv(train_path)

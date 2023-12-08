@@ -10,6 +10,14 @@ from src.exception import CustomException
 
 
 def split_data(df):
+    """Split the input DataFrame into training and test sets.
+
+    Args:
+        df (pd.DataFrame): The input DataFrame to be split.
+
+    Returns:
+        tuple: A tuple containing the training set and test set DataFrames.
+    """
     try:
         train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
         return train_set, test_set
@@ -18,6 +26,15 @@ def split_data(df):
 
 
 def save_object(file_path, obj):
+    """Save a Python object to a file using dill serialization.
+
+    Args:
+        file_path (str): The file path where the object will be saved.
+        obj (object): The Python object to be saved.
+
+    Raises:
+        CustomException: If an error occurs during the saving process.
+    """
     try:
         dir_path = os.path.dirname(file_path)
         os.makedirs(dir_path, exist_ok=True)
@@ -28,6 +45,22 @@ def save_object(file_path, obj):
 
 
 def evaluate_models(xtrain, xtest, ytrain, ytest, models, params):
+    """Evaluate the performance of machine learning models using cross-validation.
+
+    Args:
+        xtrain (array-like): Training input data.
+        xtest (array-like): Testing input data.
+        ytrain (array-like): Training target values.
+        ytest (array-like): Testing target values.
+        models (dict): Dictionary of machine learning models.
+        params (dict): Dictionary of hyperparameters for each model.
+
+    Raises:
+        CustomException: If an error occurs during the evaluation process.
+
+    Returns:
+        dict: A dictionary containing the R-squared scores for each model on the testing data.
+    """
     try:
         report = {}
 
@@ -55,6 +88,17 @@ def evaluate_models(xtrain, xtest, ytrain, ytest, models, params):
 
 
 def load_object(file_path):
+    """Load a serialized object from a file.
+
+    Args:
+        file_path (str): The path to the file containing the serialized object.
+
+    Raises:
+        CustomException: If an error occurs during the loading process.
+
+    Returns:
+        Any: The deserialized object.
+    """
     try:
         with open(file_path, "rb") as file_obj:
             return dill.load(file_obj)

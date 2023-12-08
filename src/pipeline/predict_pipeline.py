@@ -11,6 +11,17 @@ from src.utils import load_object
 
 class PredictPipeline:
     def predict(self, features):
+        """Predict the target variable using a pre-trained model.
+
+        Args:
+            features (pd.DataFrame): Input features for prediction.
+
+        Raises:
+            CustomException: An exception raised during the prediction process.
+
+        Returns:
+            np.ndarray: Predicted target variable.
+        """
         try:
             model_path = os.path.join("artifacts", "model.pkl")
             model = load_object(file_path=model_path)
@@ -40,6 +51,17 @@ class CustomData:
         reading_score: int,
         writing_score: int,
     ):
+        """Initialize an instance of the PredictData class.
+
+        Args:
+            gender (str): Gender of the individual.
+            race_ethnicity (str): Race or ethnicity of the individual.
+            parental_level_of_education (str): Level of parental education.
+            lunch (str): Type of lunch.
+            test_preparation_course (str): Test preparation course information.
+            reading_score (int): Reading score.
+            writing_score (int): Writing score.
+        """
         self.gender = gender
         self.race_ethnicity = race_ethnicity
         self.parental_level_of_education = parental_level_of_education
@@ -49,6 +71,14 @@ class CustomData:
         self.writing_score = writing_score
 
     def get_data_as_dataframe(self):
+        """Return data as a Pandas DataFrame.
+
+        Returns:
+            pd.DataFrame: A DataFrame containing the data attributes.
+
+        Raises:
+            CustomException: If an error occurs while creating the DataFrame.
+        """
         try:
             custom_data_dict = {
                 "gender": [self.gender],

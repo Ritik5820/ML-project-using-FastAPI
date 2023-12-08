@@ -25,9 +25,24 @@ class ModelTrainerConfig:
 
 class ModelTrainer:
     def __init__(self):
+        """
+        Initialize the ModelTrainer object.
+        """
         self.model_trainer_config = ModelTrainerConfig()
 
     def initiate_model_trainer(self, train_array, test_array):
+        """Initialize the model training process.
+
+        Args:
+            train_array (numpy.ndarray): Training data array.
+            test_array (numpy.ndarray): Test data array.
+
+        Raises:
+            CustomException: Raised for various exceptions.
+
+        Returns:
+            float: R2 score of the best model on the test dataset.
+        """
         try:
             logging.info("Splitting into training and test input data")
             xtrain, ytrain, xtest, ytest = (
@@ -103,12 +118,10 @@ class ModelTrainer:
             )
             logging.info("Finding the best model name with score initiated")
 
-            # Getting best model score from dict
             best_model_score = max(sorted(model_report.values()))
             if best_model_score < 0.6:
                 raise CustomException("Best model not found")
 
-            # Getting best model name from dict
             for key in model_report.keys():
                 if model_report[key] == max(sorted(model_report.values())):
                     best_model = model[key]

@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 from src.misc import (
@@ -17,8 +16,16 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
 async def index(request: Request):
+    """Render the index.html template.
+
+    Args:
+        request (Request): The FastAPI request object.
+
+    Returns:
+        HTMLResponse: The rendered HTML response.
+    """
     return templates.TemplateResponse("index.html", {"request": request})
 
 
@@ -39,6 +46,20 @@ async def predict_datapoint(
     reading_score: int = Form(title="Reading Score", description="Enter reading score"),
     writing_score: int = Form(title="Writing Score", description="Enter writing score"),
 ):
+    """Predict the math score based on input data.
+
+    Args:
+        gender (GenderEnum): Gender of the student.
+        race_ethnicity (RaceEthnicity): Race or ethnicity of the student.
+        parental_level_of_education (Parental_Level_Of_Eductaion): Parental level of education.
+        lunch (Lunch): Type of lunch.
+        test_preparation_course (TestPreparationCourse): Test preparation course.
+        reading_score (int): Reading score of the student.
+        writing_score (int): Writing score of the student.
+
+    Returns:
+        float: Predicted math score.
+    """
     data = {
         "gender": [gender.value],
         "race_ethnicity": [race_ethnicity.value],
@@ -52,5 +73,5 @@ async def predict_datapoint(
     pred_df = pd.DataFrame(data)
     predict_pipeline = PredictPipeline()
     result = predict_pipeline.predict(pred_df)
-
-    return np.round(result[0])
+    output = f"The predicted output is {np.round(result[0])}"
+    return output
